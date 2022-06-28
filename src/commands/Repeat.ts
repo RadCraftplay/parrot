@@ -13,6 +13,14 @@ export const Repeat: Command = {
             .fetch( {limit: 2} )
             .then(messagePage => (messagePage.size === 2 ? messagePage.at(1) : null));
 
+        if (message === null) {
+            await interaction.followUp({
+                ephemeral: true,
+                content: "Unable to fetch messages. Are there any on this channel?"
+            });
+            return
+        }
+
         let responseContent = message?.content != null ?
             message?.author.username + " said: \n" + message.content :
             message?.author.username + " said:";
