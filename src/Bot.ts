@@ -16,5 +16,3 @@ client.login(token);
 
 ready(client);
 interactionCreate(client);
-
-console.log(client); 
