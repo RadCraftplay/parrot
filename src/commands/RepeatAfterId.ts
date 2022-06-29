@@ -47,7 +47,7 @@ export const RepeatAfterId: Command = {
         }
 
         let responseContent = message?.content != null ?
-            message.content :
+            message?.author.username + " said:\n" + message.content:
             message?.author.username + " said:";
         
         let responseEmbeds : MessageEmbed[] = message?.embeds != null ?
