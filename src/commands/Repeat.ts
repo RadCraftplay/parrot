@@ -6,7 +6,7 @@ export const Repeat: Command = {
     name: "repeat",
     description: "Repeats previously sent message",
     type: ApplicationCommandTypes.CHAT_INPUT,
-    run: async (client: Client, interaction: BaseCommandInteraction) => {
+    run: async (_, interaction: BaseCommandInteraction) => {
         const channel = interaction.channel!;
 
         let message = await channel.messages

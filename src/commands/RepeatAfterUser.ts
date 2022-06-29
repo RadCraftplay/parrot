@@ -14,7 +14,7 @@ export const RepeatAfterUser: Command = {
             type: ApplicationCommandOptionTypes.USER
         }
     ],
-    run: async (client: Client, interaction: BaseCommandInteraction) => {
+    run: async (_, interaction: BaseCommandInteraction) => {
         const user = interaction.options.getUser("dest");
         const channel = interaction.channel!;
 
