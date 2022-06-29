@@ -27,7 +27,7 @@ export const RepeatAfterId: Command = {
             return;
         }
 
-        if (pattern.test(userId?.value as string) === null) {
+        if (!pattern.test(userId?.value as string)) {
             await interaction.followUp({
                 ephemeral: true,
                 content: "Invalid user id format"
