@@ -39,7 +39,7 @@ export const RepeatAfterId: Command = {
             .then(messagePage => messagePage.find(msg => msg.author.id === userId?.value));
 
         if (message === undefined) {
-            await interaction.followUp({
+            await interaction.reply({
                 ephemeral: true,
                 content: `No messages by user with id ${userId?.value} found in the last 100 messages!`
             });
@@ -54,11 +54,22 @@ export const RepeatAfterId: Command = {
             message.embeds : [];
 
         if (message != null) {
-            await interaction.followUp({
-                ephemeral: true,
-                embeds: responseEmbeds,
-                content: responseContent
-            });
+            if (message?.content == null || message?.content.length == 0) {
+                await message.channel.send({
+                    embeds: responseEmbeds
+                })
+            } else {
+                await message.channel.send({
+                    content: message?.content,
+                    embeds: responseEmbeds
+                })
+            }
+            
         }
+
+        await interaction.reply({
+            ephemeral: true,
+            content: "Done!"
+        });
     }
 }; 
