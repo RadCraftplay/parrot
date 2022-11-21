@@ -1,5 +1,6 @@
-import { BaseCommandInteraction, MessageEmbed } from "discord.js";
+import { BaseCommandInteraction, MessageAttachment, MessageEmbed, MessageOptions, MessagePayload } from "discord.js";
 import { ApplicationCommandOptionTypes, ApplicationCommandTypes } from "discord.js/typings/enums";
+import { MessageOptionsFactory } from "../common/MessageOptionFactory";
 import { Command } from "../Commands";
 
 export const RepeatAfterId: Command = {
@@ -45,26 +46,16 @@ export const RepeatAfterId: Command = {
             });
             return;
         }
-
-        let responseContent = message?.content != null ?
-            message?.author.username + " said:\n" + message.content:
-            message?.author.username + " said:";
         
-        let responseEmbeds : MessageEmbed[] = message?.embeds != null ?
-            message.embeds : [];
+        let options : MessageOptions = MessageOptionsFactory
+            .getFactory()
+            .withContent(message.content)
+            .withEmbeds(message.embeds)
+            .getMessageOptions();
+        
 
         if (message != null) {
-            if (message?.content == null || message?.content.length == 0) {
-                await message.channel.send({
-                    embeds: responseEmbeds
-                })
-            } else {
-                await message.channel.send({
-                    content: message?.content,
-                    embeds: responseEmbeds
-                })
-            }
-            
+            await message.channel.send(options)
         }
 
         await interaction.reply({
