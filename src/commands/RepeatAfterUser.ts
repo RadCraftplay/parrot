@@ -1,5 +1,6 @@
-import { BaseCommandInteraction, Client, MessageEmbed } from "discord.js";
+import { BaseCommandInteraction,  MessageOptions } from "discord.js";
 import { ApplicationCommandOptionTypes, ApplicationCommandTypes } from "discord.js/typings/enums";
+import { MessageOptionsFactory } from "src/common/MessageOptionFactory";
 import { Command } from "../Commands";
 
 export const RepeatAfterUser: Command = {
@@ -22,26 +23,27 @@ export const RepeatAfterUser: Command = {
             .then(messagePage => messagePage.find(msg => msg.author.id === user?.id));
 
         if (message === undefined) {
-            await interaction.followUp({
+            await interaction.reply({
                 ephemeral: true,
                 content: `No messages by user ${user?.username} found in the last 100 messages!`
             });
             return
         }
 
-        let responseContent = message?.content != null ?
-            message?.author.username + " said: \n" + message.content :
-            message?.author.username + " said:";
+        let options : MessageOptions = MessageOptionsFactory
+            .getFactory()
+            .withContent(message.content)
+            .withEmbeds(message.embeds)
+            .getMessageOptions();
         
-        let responseEmbeds : MessageEmbed[] = message?.embeds != null ?
-            message.embeds : [];
 
         if (message != null) {
-            await interaction.followUp({
-                ephemeral: true,
-                embeds: responseEmbeds,
-                content: responseContent
-            });
+            await message.channel.send(options)
         }
+
+        await interaction.reply({
+            ephemeral: true,
+            content: "Done!"
+        });
     }
 }; 
