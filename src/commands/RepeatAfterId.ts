@@ -21,7 +21,7 @@ export const RepeatAfterId: Command = {
         const pattern : RegExp = /^\d+$/;
 
         if (userId === null) {
-            await interaction.followUp({
+            await interaction.reply({
                 ephemeral: true,
                 content: "No user id provided!"
             });
@@ -29,7 +29,7 @@ export const RepeatAfterId: Command = {
         }
 
         if (!pattern.test(userId?.value as string)) {
-            await interaction.followUp({
+            await interaction.reply({
                 ephemeral: true,
                 content: "Invalid user id format"
             });
