@@ -31,7 +31,7 @@ export class MessageOptionsFactory {
         return this;
     }
 
-    // TODO: Handle attachments properly
+    // TODO(#1): Add proper attachment support
     /*
     public withAttachments(a : MessageAttachment[] | Collection<string, MessageAttachment> | null) : MessageOptionsFactory {
         if (a instanceof Collection<string, MessageAttachment>) {
