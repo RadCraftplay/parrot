@@ -1,5 +1,6 @@
-import { BaseCommandInteraction, Client, MessageEmbed } from "discord.js";
+import { BaseCommandInteraction, Client, MessageEmbed, MessageOptions } from "discord.js";
 import { ApplicationCommandTypes } from "discord.js/typings/enums";
+import { MessageOptionsFactory } from "../common/MessageOptionFactory";
 import { Command } from "../Commands";
 
 export const Repeat: Command = {
@@ -10,30 +11,31 @@ export const Repeat: Command = {
         const channel = interaction.channel!;
 
         let message = await channel.messages
-            .fetch( {limit: 2} )
-            .then(messagePage => (messagePage.size === 2 ? messagePage.at(1) : null));
+            .fetch( {limit: 1} )
+            .then(messagePage => (messagePage.size === 1 ? messagePage.at(0) : null));
 
-        if (message === null) {
-            await interaction.followUp({
+        if (message === undefined || message === null) {
+            await interaction.reply({
                 ephemeral: true,
                 content: "Unable to fetch messages. Are there any on this channel?"
             });
             return
         }
 
-        let responseContent = message?.content != null ?
-            message?.author.username + " said: \n" + message.content :
-            message?.author.username + " said:";
+        let options : MessageOptions = MessageOptionsFactory
+            .getFactory()
+            .withContent(message.content)
+            .withEmbeds(message.embeds)
+            .getMessageOptions();
         
-        let responseEmbeds : MessageEmbed[] = message?.embeds != null ?
-            message.embeds : [];
 
         if (message != null) {
-            await interaction.followUp({
-                ephemeral: true,
-                embeds: responseEmbeds,
-                content: responseContent
-            });
+            await message.channel.send(options)
         }
+
+        await interaction.reply({
+            ephemeral: true,
+            content: "Done!"
+        });
     }
 }; 
