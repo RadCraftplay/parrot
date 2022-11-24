@@ -1,6 +1,6 @@
 import { BaseCommandInteraction,  MessageOptions } from "discord.js";
 import { ApplicationCommandOptionTypes, ApplicationCommandTypes } from "discord.js/typings/enums";
-import { MessageOptionsFactory } from "src/common/MessageOptionFactory";
+import { MessageOptionsFactory } from "../common/MessageOptionFactory";
 import { Command } from "../Commands";
 
 export const RepeatAfterUser: Command = {
