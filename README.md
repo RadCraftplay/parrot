@@ -11,11 +11,11 @@ Discord bot repeating users' messages
 
 Parrot is a Discord bot that repeats user messages. Parrot can mimic last message of particullar user or followed server channel. It registers three commands:
 
-| Command            | Description
-|--------------------|----------------------------------------------------------------|
-| /mimic [@User]     | Re-send's last message sent by specified user                  |
-| /mimicid [user_id] | Re-send's last message sent by specified user with provided id |
-| /repeat            | Re-send's last message sent on current channel                 |
+| Command          | Description
+|------------------|----------------------------------------------------------------|
+| /mimic @User     | Re-send's last message sent by specified user                  |
+| /mimicid user_id | Re-send's last message sent by user with provided id           |
+| /repeat          | Re-send's last message sent on current channel                 |
 
 ## Requirements
 
